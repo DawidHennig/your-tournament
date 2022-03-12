@@ -8,4 +8,4 @@ from django.views import View
 class Index(View):
 
     def get(self, request):
-        return render(request, "index.html")
+        return render(request, "base.html",)
