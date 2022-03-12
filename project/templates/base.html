@@ -12,14 +12,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
 </head>
 <body>
-{% include 'nav_bar.html' %}
+{% include 'bar.html' %}
 
-{% block zawartosc %}
+{% block content %}
         
 {% endblock %}
 
-<div>
-{{ date }}
-{{ user.username }}
 </body>
 </html>

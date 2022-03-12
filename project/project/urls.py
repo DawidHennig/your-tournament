@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from yt_app.views import Index
+from yt_app.views import Index, AddTournamentView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Index.as_view(), name='index'),
+    path('/add_tournament', AddTournamentView.as_view(), name='add_tournament'),
 ]
