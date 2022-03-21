@@ -1,0 +1,56 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/dawid/fun/final_project/project/yt_app/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	/p5.9.20210905.0/
+.contener	static/base.css	/^.contener {$/;"	c
+.jakies_styl	static/base.css	/^.jakies_styl{$/;"	c
+.topnav	static/base.css	/^.topnav {$/;"	c
+.topnav a	static/base.css	/^.topnav a {$/;"	s
+.topnav a.active	static/base.css	/^.topnav a.active {$/;"	c
+.topnav a:hover	static/base.css	/^.topnav a:hover {$/;"	s
+AddTournamentModelForm	forms.py	/^class AddTournamentModelForm(forms.ModelForm):$/;"	c
+AddTournamentView	views.py	/^class AddTournamentView(View):$/;"	c
+Games	models.py	/^class Games(models.Model):$/;"	c
+Index	views.py	/^class Index(View):$/;"	c
+Match	models.py	/^class Match(models.Model):$/;"	c
+Meta	forms.py	/^    class Meta:$/;"	c	class:AddTournamentModelForm
+Migration	migrations/0001_initial.py	/^class Migration(migrations.Migration):$/;"	c
+Place	models.py	/^class Place(models.Model):$/;"	c
+Scores	models.py	/^class Scores(models.Model):$/;"	c
+Tournament	models.py	/^class Tournament(models.Model):$/;"	c
+YtAppConfig	apps.py	/^class YtAppConfig(AppConfig):$/;"	c
+body	static/base.css	/^body {$/;"	s
+created	models.py	/^    created = models.DateTimeField(auto_now_add=True)$/;"	v	class:Games
+created	models.py	/^    created = models.DateTimeField(auto_now_add=True)$/;"	v	class:Match
+created	models.py	/^    created = models.DateTimeField(auto_now_add=True)$/;"	v	class:Place
+created	models.py	/^    created = models.DateTimeField(auto_now_add=True)$/;"	v	class:Scores
+created	models.py	/^    created = models.DateTimeField(auto_now_add=True)$/;"	v	class:Tournament
+default_auto_field	apps.py	/^    default_auto_field = 'django.db.models.BigAutoField'$/;"	v	class:YtAppConfig
+dependencies	migrations/0001_initial.py	/^    dependencies = [$/;"	v	class:Migration
+description	models.py	/^    description = models.CharField(max_length=500)$/;"	v	class:Games
+description	models.py	/^    description = models.CharField(max_length=500)$/;"	v	class:Place
+description	models.py	/^    description = models.CharField(max_length=500)$/;"	v	class:Scores
+description	models.py	/^    description = models.CharField(max_length=500)$/;"	v	class:Tournament
+exclude	forms.py	/^        exclude = ['created']$/;"	v	class:AddTournamentModelForm.Meta
+get	views.py	/^    def get(self, request):$/;"	m	class:AddTournamentView
+get	views.py	/^    def get(self, request):$/;"	m	class:Index
+initial	migrations/0001_initial.py	/^    initial = True$/;"	v	class:Migration
+model	forms.py	/^        model = Tournament$/;"	v	class:AddTournamentModelForm.Meta
+name	apps.py	/^    name = 'yt_app'$/;"	v	class:YtAppConfig
+name	models.py	/^    name = models.CharField(max_length=30)$/;"	v	class:Games
+name	models.py	/^    name = models.CharField(max_length=30)$/;"	v	class:Match
+name	models.py	/^    name = models.CharField(max_length=30)$/;"	v	class:Place
+name	models.py	/^    name = models.CharField(max_length=30)$/;"	v	class:Scores
+name	models.py	/^    name = models.CharField(max_length=30)$/;"	v	class:Tournament
+operations	migrations/0001_initial.py	/^    operations = [$/;"	v	class:Migration
+post	views.py	/^    def post(self, request):$/;"	m	class:AddTournamentView
+tournament	models.py	/^    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)$/;"	v	class:Match
+tournaments	models.py	/^    tournaments = models.ManyToManyField(Tournament)$/;"	v	class:Games
+tournaments	models.py	/^    tournaments = models.ManyToManyField(Tournament)$/;"	v	class:Place
