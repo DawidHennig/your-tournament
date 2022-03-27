@@ -9,34 +9,33 @@ class Tournament(models.Model):
     online = models.BooleanField(default=True)
 
 
-class Match(models.Model):
+class Place(models.Model):
     name = models.CharField(max_length=30)
-    created = models.DateTimeField(auto_now_add=True)
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500)
+    address = models.CharField(max_length=300)
+    tournaments = models.ManyToManyField(Tournament)
 
 
 class Games(models.Model):  
     G_TYPES = (
         (1, "RTS"),
         (2, "FPS"),
-        (3, "MOBA")
+        (3, "MOBA"),
+        (4, "Other"),
     )
-    game_type = models.IntegerField(choices=G_TYPES)
+    game_type = models.IntegerField(choices=G_TYPES, default=4)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=500)
     created = models.DateTimeField(auto_now_add=True)
     tournaments = models.ManyToManyField(Tournament)
 
 
-class Scores(models.Model):
+class Match(models.Model):
     name = models.CharField(max_length=30)
-    description = models.CharField(max_length=500)
     created = models.DateTimeField(auto_now_add=True)
-    name1 = models.CharField(max_length=30)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
 
 
-class Place(models.Model):
+class Duel(models.Model):
     name = models.CharField(max_length=30)
-    description = models.CharField(max_length=500)
-    address = models.CharField(max_length=300)
-    tournaments = models.ManyToManyField(Tournament)
+    created = models.DateTimeField(auto_now_add=True)
