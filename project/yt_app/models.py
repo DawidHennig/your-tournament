@@ -47,3 +47,5 @@ class Match(models.Model):
 class Duel(models.Model):
     name = models.CharField(max_length=30)
     created = models.DateTimeField(auto_now_add=True)
+    match_field = models.ForeignKey(Match, on_delete=models.CASCADE, default=None)
+    winner = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)
