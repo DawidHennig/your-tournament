@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -28,6 +29,12 @@ class Games(models.Model):
     description = models.CharField(max_length=500)
     created = models.DateTimeField(auto_now_add=True)
     tournaments = models.ManyToManyField(Tournament)
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=30)
+    tournaments = models.ManyToManyField(Tournament, default=None)
+    user = models.ManyToManyField(User)
 
 
 class Match(models.Model):
