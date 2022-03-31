@@ -40,7 +40,8 @@ class Team(models.Model):
 class Match(models.Model):
     name = models.CharField(max_length=30)
     created = models.DateTimeField(auto_now_add=True)
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    team1 = models.ForeignKey(Team, related_name="team1", on_delete=models.CASCADE, default=None)
+    team2 = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)
 
 
 class Duel(models.Model):
