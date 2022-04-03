@@ -3,32 +3,40 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Tournament(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.CharField(max_length=500)
-    created = models.DateTimeField(auto_now_add=True)
-    online = models.BooleanField(default=True)
-
-
 class Place(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=500)
     address = models.CharField(max_length=300)
-    tournaments = models.ManyToManyField(Tournament)
+
+    def __str__(self):
+        return self.name
 
 
-class Games(models.Model):  
+class Game(models.Model):  
     G_TYPES = (
         (1, "RTS"),
         (2, "FPS"),
         (3, "MOBA"),
         (4, "Other"),
     )
-    game_type = models.IntegerField(choices=G_TYPES, default=4)
+    game_type = models.IntegerField(choices=G_TYPES)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=500)
     created = models.DateTimeField(auto_now_add=True)
-    tournaments = models.ManyToManyField(Tournament)
+
+    def __str__(self):
+        return self.name
+
+
+class Tournament(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=500)
+    created = models.DateTimeField(auto_now_add=True)
+    place = models.ManyToManyField(Place)
+    game = models.ManyToManyField(Game)
+
+    def __str__(self):
+        return self.name
 
 
 class Team(models.Model):

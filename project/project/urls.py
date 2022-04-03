@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from yt_app.views import Index, AddTournamentView
+from yt_app.views import Index, AddTournamentView, AddPlaceView, AddGameView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Index.as_view(), name='index'),
-    path('/add_tournament', AddTournamentView.as_view(), name='add_tournament'),
+    path('add_tournament', AddTournamentView.as_view(), name='add_tournament'),
+    path('add_place', AddPlaceView.as_view(), name='add_place'),
+    path('add_game', AddGameView.as_view(), name='add_game'),
 ]
