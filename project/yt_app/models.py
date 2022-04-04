@@ -42,7 +42,7 @@ class Tournament(models.Model):
 class Team(models.Model):
     name = models.CharField(max_length=30)
     tournaments = models.ManyToManyField(Tournament, default=None)
-    user = models.ManyToManyField(User)
+    players = models.ManyToManyField(User)
 
 
 class Match(models.Model):
