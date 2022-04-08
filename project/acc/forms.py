@@ -7,11 +7,8 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput())
 
 
-class CreateUserForm(forms.ModelForm):
-
-    class Meta:
-        model = User
-        fields = ['username', 'password', 'first_name', 'last_name']
-        widgets = {
-            'password':forms.PasswordInput
-        }
+class CreateUserForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput())
+    email = forms.CharField()
+    code = forms.CharField()

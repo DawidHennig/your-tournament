@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views import View 
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from mixins import SuperuserRequiredMixin
+from django.views.generic import ListView 
 
-from yt_app.forms import AddTournamentForm, AddPlaceForm, AddGameForm, AddTeamForm, AddMatchForm
-from yt_app.models import Tournament, Place, Game, Team, Match
+from yt_app.forms import AddTournamentForm, AddPlaceForm, AddGameForm, AddTeamForm, AddMatchForm, AddDuelForm, UpdateTeamForm
+from yt_app.models import Tournament, Place, Game, Team, Match, Duel
 # Create your views here.
 
 
@@ -13,7 +16,7 @@ class Index(View):
         return render(request, "index.html",)
 
 
-class AddTournamentView(View):
+class AddTournamentView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddTournamentForm()
         return render(request, "form.html", {'form': form})
@@ -31,10 +34,10 @@ class AddTournamentView(View):
 
 
             return redirect("index")
-        return redirect("add_place")
+        return redirect("add_tournament")
 
 
-class AddPlaceView(View):
+class AddPlaceView(SuperuserRequiredMixin, View):
     def get(self, request):
         form = AddPlaceForm()
         return render(request, "form.html", {'form': form})
@@ -48,7 +51,7 @@ class AddPlaceView(View):
         return redirect("index")
 
 
-class AddGameView(View):
+class AddGameView(SuperuserRequiredMixin, View):
     def get(self, request):
         form = AddGameForm()
         return render(request, "form.html", {'form': form})
@@ -62,7 +65,7 @@ class AddGameView(View):
         return redirect("add_game")
 
 
-class AddTeamView(View):
+class AddTeamView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddTeamForm()
         return render(request, "form.html", {'form': form})
@@ -78,10 +81,10 @@ class AddTeamView(View):
             t_obj.players.set(players)
 
             return redirect("index")
-        return redirect("add_place")
+        return redirect("add_team")
 
 
-class AddMatchView(View):
+class AddMatchView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddMatchForm()
         return render(request, "form.html", {'form': form})
@@ -92,7 +95,53 @@ class AddMatchView(View):
             name = form.cleaned_data["name"]
             team1 = form.cleaned_data["team1"]
             team2 = form.cleaned_data["team2"]
-            m_obj = Match.objects.create(name=name, team1=team1, team2=team2)
+            tournament = form.cleaned_data["tournament"]
+            Match.objects.create(name=name, team1=team1, team2=team2, tournament=tournament)
 
             return redirect("index")
-        return redirect("add_place")
+        return redirect("add_match")
+
+
+class AddDuelView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = AddDuelForm()
+        return render(request, "form.html", {'form': form})
+
+    def post(self, request):
+        form =  AddDuelForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            match_field = form.cleaned_data["match_field"]
+            Duel.objects.create(name=name, match_field=match_field)
+
+            return redirect("index")
+        return redirect("add_duel")
+
+
+class ListTournaments(ListView):
+    model = Tournament
+    template_name = "tournament_list.html"
+
+
+class ViewTeams(LoginRequiredMixin, ListView):
+    model = Team 
+    template_name = "obj_list_url.html"
+
+
+class TeamDetail(View):
+
+    def get(self, request, id):
+        team = Team.objects.get(id=id)
+        tournaments = team.tournaments.all()
+        players = team.players.all()
+
+        return render(request, 'team.html', {'team': team, 'tournaments': tournaments, 'players': players})
+
+
+class UpdateTeam(LoginRequiredMixin, View):
+
+    def get(self, request):
+        form = UpdateTeamForm()
+        return render(request, "form.html", {'form': form})
+
+

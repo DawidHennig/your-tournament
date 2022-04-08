@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from yt_app.views import Index, AddTournamentView, AddPlaceView, AddGameView, AddTeamView, AddMatchView
+from yt_app.views import Index, AddTournamentView, AddPlaceView, AddGameView, AddTeamView, AddMatchView, AddDuelView, ListTournaments, ViewTeams, UpdateTeam, TeamDetail
 from acc.views import LogInView, LogOutView, RegisterView 
 
 urlpatterns = [
@@ -26,6 +26,11 @@ urlpatterns = [
     path('add_game', AddGameView.as_view(), name='add_game'),
     path('add_team', AddTeamView.as_view(), name='add_team'),
     path('add_match', AddMatchView.as_view(), name='add_match'),
+    path('add_duel', AddDuelView.as_view(), name='add_duel'),
+    path('list_tournaments', ListTournaments.as_view(), name='list_tournaments'),
+    path('view_teams', ViewTeams.as_view(), name='view_teams'),
+    path('update_team', UpdateTeam.as_view(), name='update_team'),
+    path('detail_team/<int:id>/', TeamDetail.as_view(), name='detail_team'),
     path('login', LogInView.as_view(), name='login'),
     path('logout', LogOutView.as_view(), name='logout'),
     path('register', RegisterView.as_view(), name='register'),

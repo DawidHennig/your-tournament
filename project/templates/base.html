@@ -18,5 +18,9 @@
         
 {% endblock %}
 
+<p>{% if user.is_authenticated %}
+Log as: {{ user.username }}
+{% endif %}
+</div>
 </body>
 </html>

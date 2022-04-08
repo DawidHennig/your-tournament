@@ -41,8 +41,15 @@ class RegisterView(View):
     def post(self, request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
-            user.save()
-            return redirect("/")
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            code = form.cleaned_data['code']
+            if code == "admin":
+                User.objects.create_superuser(username=username, password=password, email=email)
+            else:
+                User.objects.create_user(username=username, password=password, email=email)
+
+        return redirect('/')
+
         return render(request, 'form.html', {'form': form})

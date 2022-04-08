@@ -39,21 +39,37 @@ class Tournament(models.Model):
         return self.name
 
 
+
 class Team(models.Model):
     name = models.CharField(max_length=30)
     tournaments = models.ManyToManyField(Tournament, default=None)
     players = models.ManyToManyField(User)
 
+    def __str__(self):
+        return self.name
+
+    def get_update_url(self):
+        return f'/detail_team/{self.id}/'
 
 class Match(models.Model):
     name = models.CharField(max_length=30)
     created = models.DateTimeField(auto_now_add=True)
     team1 = models.ForeignKey(Team, related_name="team1", on_delete=models.CASCADE, default=None)
     team2 = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class Duel(models.Model):
     name = models.CharField(max_length=30)
     created = models.DateTimeField(auto_now_add=True)
-    match_field = models.ForeignKey(Match, on_delete=models.CASCADE, default=None)
-    winner = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)
+    match_field = models.ForeignKey(Match, on_delete=models.CASCADE)
+    winner = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_update_url(self):
+        return f'/update_duel/{self.id}/'

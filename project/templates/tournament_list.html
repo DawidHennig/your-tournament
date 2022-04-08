@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<title>Tournament list</title>
+    {% for tournament in object_list %}
+        <li>{{ tournament }}</li>
+    {% endfor %}
+{% endblock %}
