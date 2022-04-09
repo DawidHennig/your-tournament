@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% for match in matches %}
+    <ul> {{ match.name }}
+        {% for duel in match.duel_set.all %}
+        <li>
+            <a href="{{ duel.get_update_url }}">{{ duel }}</a>
+        </li>
+        {% endfor %}
+
+    </ul>
+    {% endfor %}
+
+{% endblock %}
