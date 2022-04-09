@@ -6,6 +6,7 @@
         {% for duel in match.duel_set.all %}
         <li>
             <a href="{{ duel.get_update_url }}">{{ duel }}</a>
+            Winner: {{ duel.winner }}
         </li>
         {% endfor %}
 
