@@ -8,6 +8,7 @@ from yt_app.models import (
         Team,
         User,
         Match,
+        Duel,
         )
 import pytest
 
@@ -66,3 +67,19 @@ def match_model():
     tournament = Tournament.objects.create()
     return Match.objects.create(name="Test match", team1=team, team2=team, tournament=tournament)
 
+@pytest.fixture
+def duel():
+    team = Team.objects.create()
+    tournament = Tournament.objects.create()
+    match_model = Match.objects.create(name="Test match", team1=team, team2=team, tournament=tournament)
+    match_m = Match.objects.get(name="Test match")
+    duel = Duel.objects.create(match_field=match_m)
+    return duel 
+
+@pytest.fixture
+def user():
+    return User.objects.create_user(username="test", password="test")
+
+@pytest.fixture
+def superuser():
+    return User.objects.create_superuser(username="supertest", password="supertest")
