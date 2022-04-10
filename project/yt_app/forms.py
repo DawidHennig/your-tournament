@@ -1,7 +1,7 @@
 from django import forms
-
 from yt_app.models import Tournament, Place, Game, Team, Match
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 class AddTournamentForm(forms.Form):
@@ -35,15 +35,24 @@ class AddMatchForm(forms.Form):
     team2 = forms.ModelChoiceField(queryset=Team.objects.all())
     tournament = forms.ModelChoiceField(queryset=Tournament.objects.all())
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        team1 = cleaned_data.get('team1')
+        team2 = cleaned_data.get('team2') 
+
+        if team1 == team2:
+            raise forms.ValidationError('Teams have to be different')
+
 
 class AddDuelForm(forms.Form):
-    name = forms.CharField()
     match_field = forms.ModelChoiceField(queryset=Match.objects.all(), label='Match')
+
+
 
 
 class UpdateTeamForm(forms.Form):
     team = forms.ModelChoiceField(queryset=Team.objects.all())
-    tournaments_add = forms.ModelMultipleChoiceField(queryset=Tournament.objects.all(), label='Add tournaments')
-    tournaments_romove = forms.ModelMultipleChoiceField(queryset=Tournament.objects.all(), label='Romove tournaments')
-    players_add = forms.ModelMultipleChoiceField(queryset=User.objects.all(), label='Add players')
-    players_rm = forms.ModelMultipleChoiceField(queryset=User.objects.all(), label='Remove players')
+    tournaments_ch= forms.ModelMultipleChoiceField(queryset=Tournament.objects.all(), label='Change tournaments')
+    players_ch = forms.ModelMultipleChoiceField(queryset=User.objects.all(), label='Change players')
+

@@ -42,7 +42,7 @@ class Tournament(models.Model):
 
 class Team(models.Model):
     name = models.CharField(max_length=30)
-    tournaments = models.ManyToManyField(Tournament, default=None)
+    tournaments = models.ManyToManyField(Tournament, null=True)
     players = models.ManyToManyField(User)
 
     def __str__(self):
@@ -67,6 +67,9 @@ class Duel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     match_field = models.ForeignKey(Match, on_delete=models.CASCADE)
     winner = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
+
+    def get_teams(self):
+        return [self.match_field.team1, self.match_field.team2]
 
     def __str__(self):
         return self.name

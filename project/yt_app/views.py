@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from mixins import SuperuserRequiredMixin
-from django.views.generic import ListView 
+from django.views.generic import ListView, UpdateView
 
 from yt_app.forms import AddTournamentForm, AddPlaceForm, AddGameForm, AddTeamForm, AddMatchForm, AddDuelForm, UpdateTeamForm
 from yt_app.models import Tournament, Place, Game, Team, Match, Duel
@@ -108,10 +108,10 @@ class AddDuelView(LoginRequiredMixin, View):
         return render(request, "form.html", {'form': form})
 
     def post(self, request):
-        form =  AddDuelForm(request.POST)
+        form = AddDuelForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data["name"]
             match_field = form.cleaned_data["match_field"]
+            name = f'{match_field.team1} vs {match_field.team2}'
             Duel.objects.create(name=name, match_field=match_field)
 
             return redirect("index")
@@ -145,3 +145,30 @@ class UpdateTeam(LoginRequiredMixin, View):
         return render(request, "form.html", {'form': form})
 
 
+    def post(self, request):
+        form = UpdateTeamForm(request.POST)
+        if form.is_valid():
+            team = form.cleaned_data["team"]
+            tournaments_ch  = form.cleaned_data["tournaments_ch"]
+            players_ch= form.cleaned_data["players_ch"]
+            team.tournaments.clear()
+            team.tournaments.set(tournaments_ch)
+            team.players.clear()
+            team.players.set(players_ch)
+
+            return redirect("index")
+        return redirect("update_team")
+
+
+class ViewDuel(LoginRequiredMixin, View):
+    def get(self, request):
+        matches = Match.objects.all()
+
+        return render(request, 'duel_list.html', {'matches': matches})
+
+
+class UpdateDuel(LoginRequiredMixin, UpdateView):
+    model = Duel
+    template_name = 'update_duel.html' 
+    success_url = '/view_duel'
+    fields = ['winner']
